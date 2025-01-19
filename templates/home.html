@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Загрузите изображение</h1>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+    <h2>Загруженные изображения</h2>
+    <ul>
+        {% for image in images %}
+            <li>
+                <img src="{{ url_for('uploaded_file', filename=image.filename) }}" alt="{{ image.filename }}">
+                <a href="{{ url_for('delete_image', filename=image.filename) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% if processed %}
+        <h2>Обработанные изображения</h2>
+        <img src="{{ url_for('uploaded_file', filename=processed) }}" alt="Processed Image">
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
